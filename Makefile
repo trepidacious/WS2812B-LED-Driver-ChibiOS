@@ -10,7 +10,7 @@ endif
 
 # C specific options here (added to USE_OPT).
 ifeq ($(USE_COPT),)
-  USE_COPT = 
+  USE_COPT =
 endif
 
 # C++ specific options here (added to USE_OPT).
@@ -64,7 +64,7 @@ endif
 PROJECT = ch
 
 # Imported source files and paths
-CHIBIOS = ChibiOS-RT
+CHIBIOS = ../ChibiOS
 include $(CHIBIOS)/boards/ST_STM32F4_DISCOVERY/board.mk
 include $(CHIBIOS)/os/hal/platforms/STM32F4xx/platform.mk
 include $(CHIBIOS)/os/hal/hal.mk
@@ -187,7 +187,7 @@ DLIBS =
 #
 
 # List all user C define here, like -D_DEBUG=1
-UDEFS = 
+UDEFS =
 
 # Define ASM defines here
 UADEFS =

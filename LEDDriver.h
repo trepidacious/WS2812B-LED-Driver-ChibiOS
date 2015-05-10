@@ -22,4 +22,5 @@ struct Color {
 void ledDriverInit(int leds, GPIO_TypeDef *port, uint32_t mask, uint8_t **o_fb);
 void setColorRGB(Color c, uint8_t *buf, uint32_t mask);
 void testPatternFB(uint8_t *fb);
+void rainbow(uint8_t *fb, float h, float s, float l, float hStep);
 #endif /* LEDDRIVER_H_ */

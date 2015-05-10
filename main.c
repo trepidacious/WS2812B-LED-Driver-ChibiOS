@@ -27,7 +27,6 @@ static msg_t Thread1(void *arg) {
 
   (void)arg;
   chRegSetThreadName("blinker");
-  bool testPad = false;
   while (TRUE) {
 
     palSetPad(GPIOD, GPIOD_LED4);
@@ -45,8 +44,9 @@ static msg_t Thread1(void *arg) {
     palSetPad(GPIOD, GPIOD_LED6);
     chThdSleepMilliseconds(100);
     palClearPad(GPIOD, GPIOD_LED6);
-
   }
+
+  return RDY_OK;
 }
 
 /*
@@ -66,9 +66,9 @@ int main(void) {
   uint8_t *o_fb;
 
   /*
-   * Initialize LedDriver - 150 leds in chain, GPIOA pin 1
+   * Initialize LedDriver - 12 leds in chain, GPIOA pin 1
    */
-  ledDriverInit(30, GPIOA, 0b00000010, &o_fb);
+  ledDriverInit(12, GPIOA, 0b00000010, &o_fb);
   testPatternFB(o_fb);
 
   /*
@@ -89,9 +89,13 @@ int main(void) {
    * sleeping in a loop and check the button state, when the button is
    * pressed the test procedure is launched.
    */
+  float hue = 0.0f;
   while (TRUE) {
-    if (palReadPad(GPIOA, GPIOA_BUTTON))
-      testPatternFB(o_fb);
-    chThdSleepMilliseconds(500);
+    if (palReadPad(GPIOA, GPIOA_BUTTON)) {
+//      testPatternFB(o_fb);
+    }
+    rainbow(o_fb, hue, 1.0f, 0.5f, 0.083333333f);
+    chThdSleepMilliseconds(50);
+    hue += 0.01f;
   }
 }

@@ -6,6 +6,7 @@
  */
 
 #include "LEDDriver.h"
+#include "color.h"
 
 static uint8_t *fb;
 static int sLeds;
@@ -139,6 +140,21 @@ void ledDriverInit(int leds, GPIO_TypeDef *port, uint32_t mask, uint8_t **o_fb) 
   PWMD2.tim->CR1 |= TIM_CR1_CEN;
 }
 
+void rainbow(uint8_t *fb, float h, float s, float l, float hStep){
+  int i;
+  float r, g, b;
+  Color tmpC = {0, 0, 0};
+  for (i=0;i<sLeds;i++){
+    while(h > 1.0f) h -= 1.0f;
+    color_hsl_to_rgb(h, s, l, &r, &g, &b);
+    tmpC.R = (uint8_t)(r * 255.0f);
+    tmpC.G = (uint8_t)(g * 255.0f);
+    tmpC.B = (uint8_t)(b * 255.0f);
+    setColorRGB(tmpC,fb+24*i, sMask);
+
+    h += hStep;
+  }
+}
 
 void testPatternFB(uint8_t *fb){
   int i;
